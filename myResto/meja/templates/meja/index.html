@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+  {% for meja in list_meja %}
+  <div class="container mx-auto">
+    <div class="stats shadow w-full mt-10 bg-base-200">
+        <div class="stat place-items-center">
+          <div class="stat-title">Meja</div>
+          <div class="stat-value">{{meja.nama_meja}}</div>
+        </div>
+        
+        <div class="stat place-items-center">
+          <div class="stat-title">Status</div>
+          <div class="stat-value text-secondary">{{meja.status}}</div>
+          {% if meja.status == 'Terisi' %}
+          <form method="POST">
+            {% csrf_token %}
+            <input name="nama_meja" type="hidden" value="{{meja.nama_meja}}">
+            <input name="status" value="Kosongkan" type="submit" class="btn-sm rounded-btn glass btn-outline btn-error"></input>
+          </form>
+          {% endif %}
+          
+        </div>
+    </div>
+  </div>
+  {% endfor %}
+    
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html'%}
+{% block title %}Home{% endblock %}
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock %}
+{% block content %}
+    {% if request.user.groups.all.0.name == 'koki' %}
+    <div class="container mx-auto">
+      <div class="stats shadow mt-20 bg-base-200">
+        <div class="stat">
+          <div class="stat-title">Pesanan Perlu Dimasak</div>
+          <div class="stat-value">{{pesanan_perlu_dimasak}}</div>
+        </div>
+      </div>
+    </div>
+    {% elif request.user.groups.all.0.name == 'kasir' %}
+    <div class="container mx-auto">
+      <div class="flex justify-center stats w-full shadow mt-20 bg-base-200">
+        <div class="stat w-full">
+          <div class="stat-title">Pesanan Belum Dibayar</div>
+          <div class="stat-value">{{pesanan_belum_dibayar}}</div>
+        </div>
+      </div>
+    </div>
+    {% elif request.user.groups.all.0.name == 'owner' %}
+    <div class="diff aspect-[16/9]">
+      <div class="diff-item-1">
+        <div class="bg-primary text-primary-content text-9xl font-black grid place-content-center">Auxesia</div>
+      </div>
+      <div class="diff-item-2">
+        <div class="bg-base-200 text-9xl font-black grid place-content-center">Fajar</div>
+      </div>
+      <div class="diff-resizer"></div>
+    </div>
+
+
+    {% elif request.user.groups.all.0.name == 'pelayan' %}
+    <div class="container mx-auto">
+      <div class="stats stats-vertical lg:stats-horizontal shadow w-full mt-20 bg-base-200">
+    
+          <div class="stat">
+            <div class="stat-title badge badge-secondary">Pesanan Belum di Konfirmasi</div>
+            <div class="stat-value">{{pesanan_belum_terkonfirmasi}}</div>
+          </div>
+          
+          <div class="stat">
+            <div class="stat-title badge badge-primary">Meja Kosong</div>
+            <div class="stat-value">{{meja_kosong}}</div>
+          </div>
+          
+          <div class="stat">
+            <div class="stat-title badge badge-primary">Pesanan Siap di Sajikan</div>
+            <div class="stat-value">{{pesanan_siap_disajikan}}</div>
+          </div>
+          
+        </div>
+    </div>
+
+    {% elif request.user.groups.all.0.name == 'meja' %}
+    <div class="hero min-h-screen bg-base-200">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">Hello there</h1>
+          <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+          <form method="POST">
+            {% csrf_token %}
+            <input name="nama_meja" type="hidden" value="{{user}}">
+            <input type="submit" name="status" value="Pesan" class="btn btn-primary"></input>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

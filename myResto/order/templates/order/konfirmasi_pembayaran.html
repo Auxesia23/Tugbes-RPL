@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Cart{% endblock %}
+{% block navbar %}{% include 'navbar.html' %}{% endblock %}
+{% block content %}
+{% if list_pembayaran %}
+    <div class="overflow-x-auto container m-10 mx-auto">
+        <table class="table table-zebra bg-base-200">
+        <!-- head -->
+        <thead>
+            <tr>
+            <th>Meja</th>
+            <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- row 1 -->
+            {% for pembayaran in list_pembayaran %}
+            <tr>
+            <form method="POST">
+                {% csrf_token %}
+                <td>{{pembayaran.user}}</td>
+                <td>Rp. {{pembayaran.total}}</td>
+                <input type="hidden" value="{{pembayaran.id}}" name="id">
+                <input type="hidden" value="{{pembayaran.user}}" name="user">
+                <td><button type="submit" class="btn-sm rounded-btn glass btn-outline btn-accent">Konfirmasi</button></td>
+            </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+{% else %}
+<center>
+    <div class="toast toast-center toast-middle">
+        <div class="alert bg-error">
+          <h1>Tidak Ada Pembayaran</h1>
+        </div>
+</center>
+{% endif %}
+{% endblock %}

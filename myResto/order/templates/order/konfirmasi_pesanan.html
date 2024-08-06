@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title%}Dimasak{% endblock %}
+{% block navbar%}{% include 'navbar.html' %}{% endblock %}
+{% block content%}
+<div  class="container mt-10 mx-auto"></div>
+{% if order_items %}
+    {% for item in order_items %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{item.id}}">
+        <div class="container mb-10 w-1/2 mx-auto">
+            <button class="btn btn-secondary">
+                {{item.user}}
+            </button>
+            <table class="table-sm table-zebra " style="width: 700px;">
+            <tr>
+                <th>Nama Barang</th>
+                <th>Quantity</th>
+            </tr>
+                {% for item in item.order_details %}
+                    <tr>
+                    <td>{{ item.nama_barang }}</td>
+                    <td>{{ item.quantity }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <input name="konfirmasi" value="Konfirmasi" type="submit" class="btn btn-primary glass"></input>
+            <input name="batal" value="Batal" type="submit" class="btn btn-error glass"></input>
+            <br>
+        </div>
+    </form>
+    {% endfor %}
+    </div>
+{% else %}
+<center>
+    <div class="toast toast-center toast-middle">
+        <div class="alert bg-error">
+          <h1>Tidak Ada Pesanan</h1>
+        </div>
+</center>
+{% endif %}
+{% endblock %}
